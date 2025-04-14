@@ -1,0 +1,2 @@
+# KnockOut
+Tärningsspel för programmeringskurs
