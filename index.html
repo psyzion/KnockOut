@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tärningsspelet Knockout</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="game-container">
+    <h1>Knockout 🎲</h1>
+
+    <!-- Spelregler -->
+    <div class="instructions-inside">
+      <h2>Spelregler</h2>
+      <p>
+        1. Välj ett <strong>knockoutnummer</strong> (6, 7, 8 eller 9).<br>
+        2. Klicka på <strong>Kasta tärningarna</strong> för att slå tärningarna.<br>
+        3. Du förlorar om summan blir ditt knockoutnummer!<br>
+        4. Du vinner om du når <strong>minst 45 poäng</strong>!<br>
+        5. Du får byta knockoutnummer mellan kasten.<br>
+      </p>
+    </div>
+
+    <!-- Välj knockout-nummer -->
+    <div class="knockout-selection">
+      <label for="knockout">Välj ditt knockout-nummer:</label>
+      <select id="knockout">
+        <option value="">-- Välj --</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+    </div>
+
+    <!-- Tärningar -->
+    <div class="dice-area">
+      <div id="dice1" class="dice">🎲</div>
+      <div id="dice2" class="dice">🎲</div>
+    </div>
+
+    <!-- Knappar -->
+    <div class="buttons">
+      <button id="rollButton">Kasta tärningarna</button>
+      <button id="resetButton">Starta om</button>
+    </div>
+
+    <!-- Resultat / status -->
+    <div id="status" class="status-text"></div>
+    <div class="last-result" id="lastResult"></div>
+    <div class="score-display">
+      Totalsumma: <span id="total">0</span>
+    </div>
+  </div>
+
+  <!-- Hi-scorelista -->
+  <div class="hiscore-container">
+    <h2>Hi-Score</h2>
+    <ul id="hiscoreList" class="hiscore-list"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
