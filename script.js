@@ -57,6 +57,11 @@ function rollDice() {
           statusText.textContent = `Grattis! Du vann med ${totalScore} poäng!`;
           gameOver = true;
           rollButton.disabled = true;
+        // kontrollera om namn är ifyllt
+        const name = nameInput.value.trim() || 'Anonym';
+
+        // spara resultatet till hi-score
+        saveHiScore(name, totalScore);
         } else {
           statusText.textContent = `Du slog ${sum}. Fortsätt spela!`;
         }
@@ -98,3 +103,59 @@ function resetGame() {
 // eventfångare knappar
 rollButton.addEventListener('click', rollDice);
 resetButton.addEventListener('click', resetGame);
+
+// referens till namninput och hi-scorelista
+const nameInput = document.getElementById('playerName');
+const hiscoreList = document.getElementById('hiscoreList');
+
+// funktion: spara spelare till localStorage
+function saveHiScore(name, score) {
+  const date = new Date().toLocaleDateString(); // dagens datum
+  const newEntry = { name, score, date };
+
+  // hämta tidigare lista, eller tom lista om ingen finns
+  let hiscores = JSON.parse(localStorage.getItem('hiscores')) || [];
+
+  // lägg till nya posten och sortera efter poäng (högst först)
+  hiscores.push(newEntry);
+  hiscores.sort((a, b) => b.score - a.score);
+
+  // spara max 10 poster
+  hiscores = hiscores.slice(0, 10);
+
+  // spara tillbaka i localStorage
+  localStorage.setItem('hiscores', JSON.stringify(hiscores));
+
+  // uppdatera på sidan
+  renderHiScores();
+}
+
+// funktion: visa listan på sidan
+function renderHiScores() {
+  const hiscores = JSON.parse(localStorage.getItem('hiscores')) || [];
+  hiscoreList.innerHTML = ''; // rensa lista först
+
+  // loopa igenom varje post och lägg till i HTML
+  hiscores.forEach(entry => {
+    const li = document.createElement('li');
+    li.textContent = `${entry.name} – ${entry.score} poäng (${entry.date})`;
+    hiscoreList.appendChild(li);
+  });
+}
+
+// uppdatera direkt vid laddning
+renderHiScores();
+
+// modifiera befintlig kod i rollDice() → när spelare vinner:
+if (totalScore >= 45) {
+  statusText.textContent = `Grattis! Du vann med ${totalScore} poäng!`;
+  gameOver = true;
+  rollButton.disabled = true;
+
+  // kontroll: har spelaren fyllt i namn?
+  const name = nameInput.value.trim() || 'Anonym'; // standard om tomt
+
+  // spara till hi-score
+  saveHiScore(name, totalScore);
+}
+
